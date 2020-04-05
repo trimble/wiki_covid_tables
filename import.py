@@ -1,5 +1,6 @@
-import pandas as pandas
+import argparse
 import datetime
+import pandas as pandas
 
 def get_data_for_date(targetDate):
   # url = "https://github.com/CSSEGISandData/COVID-19/raw/web-data/data/cases.csv"
@@ -15,13 +16,20 @@ def county_table(df, targetDate, state):
     print(f"|-\n|style=\"text-align:left;\"|[[{row['County']} County, {state}|{row['County']}]]||{row['Confirmed']}||{row['Deaths']}")
   print(f"|-\n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.Confirmed}\n! style=\"text-align:right;\" |{totals.Deaths}\n|}}")
 
-date = "04-04-2020"
-df = get_data_for_date(date)
-totals = df.sum()
-# print(date, totals.Confirmed, totals.Deaths)
-county_table(df, date, 'Indiana')
+parser = argparse.ArgumentParser()
+parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
+parser.add_argument('state', help='US state for which to present data')
+args = parser.parse_args()
 
-# for i in range(1, 4):
-#   date = f"04-{i:02d}-2020"
-#   df = get_data_for_date(date, 'Indiana')
-#   print(date, df.sum().Confirmed, df.sum().Deaths)
+if args.county_table:
+  date = "04-04-2020"
+  df = get_data_for_date(date)
+  totals = df.sum()
+  county_table(df, date, args.state)
+else:
+  for i in range(1, 5):
+    date = f"04-{i:02d}-2020"
+    df = get_data_for_date(date)
+    state = df[df.Province_State.eq(args.state)]
+    totals = state.sum()
+    print(date, totals.Confirmed, totals.Deaths)
