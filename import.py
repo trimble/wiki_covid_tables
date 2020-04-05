@@ -24,7 +24,6 @@ args = parser.parse_args()
 if args.county_table:
   date = "04-04-2020"
   df = get_data_for_date(date)
-  totals = df.sum()
   generate_county_table(df, date, args.state)
 else:
   for i in range(1, 5):
