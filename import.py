@@ -1,11 +1,11 @@
 import argparse
 import datetime
-import pandas as pandas
+import pandas as pd
 
 def get_data_for_date(targetDate):
   # url = "https://github.com/CSSEGISandData/COVID-19/raw/web-data/data/cases.csv"
   url = f"https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/{targetDate.strftime('%m-%d-%Y')}.csv"
-  return pandas.read_csv(url)[['Province_State', 'Admin2', 'Confirmed', 'Deaths']].rename(columns={"Admin2": "County"})
+  return pd.read_csv(url)[['Province_State', 'Admin2', 'Confirmed', 'Deaths']].rename(columns={"Admin2": "County"})
 
 
 def generate_county_table(df, targetDate, state):
@@ -27,9 +27,19 @@ if args.county_table:
   df = get_data_for_date(date)
   generate_county_table(df, date, args.state)
 else:
-  for i in range(1, 5):
-    date = f"04-{i:02d}-2020"
-    df = get_data_for_date(date)
+  frame = pd.DataFrame(data={'Date':[datetime.datetime(2020, 4, 1)],'Province_State':[args.state],'Confirmed':[3029],'Deaths':[113]})
+  # Note: Older files  in Johns Hopkins data have weird data field name changes. So, just start here and move forward.
+  dates = pd.date_range(datetime.datetime(2020, 4, 2), datetime.datetime.today() - datetime.timedelta(days=1))
+
+  for i in dates:
+    df = get_data_for_date(i).assign(Date = i)
     state = df[df.Province_State.eq(args.state)]
-    totals = state.sum()
-    print(date, totals.Confirmed, totals.Deaths)
+    frame = frame.append(state, ignore_index=True)
+
+  frame = frame[frame.Province_State.eq('Indiana')]
+  totals = frame.groupby(['Date'], as_index=False).sum()
+  totals = totals.assign(cases_change=totals.Confirmed.pct_change())
+  totals = totals.assign(deaths_change=totals.Deaths.pct_change())
+
+  for index, row in totals.iterrows():
+    print(f"{row['Date'].strftime('%Y-%m-%d')};{row['Deaths']};;{row['Confirmed']};;;{row['Confirmed']};{row['cases_change']:.0%};{row['Deaths']};{row['deaths_change']:.0%}")
