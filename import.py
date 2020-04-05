@@ -19,10 +19,11 @@ def generate_county_table(df, targetDate, state):
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
 parser.add_argument('state', help='US state for which to present data')
+parser.add_argument('date', help='date for which to present data "MM-DD-YYYY"')
 args = parser.parse_args()
 
 if args.county_table:
-  date = "04-04-2020"
+  date = args.date
   df = get_data_for_date(date)
   generate_county_table(df, date, args.state)
 else:
