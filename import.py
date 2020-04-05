@@ -4,7 +4,7 @@ import pandas as pandas
 
 def get_data_for_date(targetDate):
   # url = "https://github.com/CSSEGISandData/COVID-19/raw/web-data/data/cases.csv"
-  url = f"https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/{targetDate}.csv"
+  url = f"https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/{targetDate.strftime('%m-%d-%Y')}.csv"
   return pandas.read_csv(url)[['Province_State', 'Admin2', 'Confirmed', 'Deaths']].rename(columns={"Admin2": "County"})
 
 
@@ -19,11 +19,11 @@ def generate_county_table(df, targetDate, state):
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
 parser.add_argument('state', help='US state for which to present data')
-parser.add_argument('date', help='date for which to present data "MM-DD-YYYY"')
+parser.add_argument('date', help='date for which to present data')
 args = parser.parse_args()
 
 if args.county_table:
-  date = args.date
+  date = datetime.datetime.strptime(args.date, "%Y-%m-%d")
   df = get_data_for_date(date)
   generate_county_table(df, date, args.state)
 else:
