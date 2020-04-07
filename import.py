@@ -23,7 +23,7 @@ if args.county_table:
   df = get_data()
   generate_county_table(df, 'Indiana')
 else:
-  print("THis part needs to be repaired to work with the new data source")
+  print("This part needs to be repaired to work with the new data source")
   # dates = pd.date_range(datetime.datetime(2020, 4, 2), datetime.datetime.today() - datetime.timedelta(days=1))
 
   # for i in dates:
