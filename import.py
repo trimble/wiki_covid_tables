@@ -2,44 +2,39 @@ import argparse
 import datetime
 import pandas as pd
 
-def get_data_for_date(targetDate):
-  # url = "https://github.com/CSSEGISandData/COVID-19/raw/web-data/data/cases.csv"
-  url = f"https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/{targetDate.strftime('%m-%d-%Y')}.csv"
-  return pd.read_csv(url)[['Province_State', 'Admin2', 'Confirmed', 'Deaths']].rename(columns={"Admin2": "County"})
+def get_data():
+  url = "https://coronavirus.in.gov/map-test/covid_report_county.csv"
+  return pd.read_csv(url)[['county','case_count','death_cases']]
 
 
-def generate_county_table(df, targetDate, state):
-  data = df[df.Province_State.eq(state)]
+def generate_county_table(data, state):
   totals = data.sum()
-  print(f"{{| class=\"wikitable sortable\" style=\"text-align:right\"\n|+Coronavirus disease 2019 (COVID-19) cases in {state}<ref>{{{{Cite web|url=https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/{targetDate}.csv|title=2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>\n! County || Confirmed Cases || Deaths")
+  print(f"{{| class=\"wikitable sortable\" style=\"text-align:right\"\n|+Coronavirus disease 2019 (COVID-19) cases in {state}<ref>{{{{Cite web|url=https://coronavirus.in.gov/map-test/covid_report_county.csv|title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19)|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>\n! County || Confirmed Cases || Deaths")
   for index, row in data.iterrows():
-    print(f"|-\n|style=\"text-align:left;\"|[[{row['County']} County, {state}|{row['County']}]]||{row['Confirmed']}||{row['Deaths']}")
-  print(f"|-\n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.Confirmed}\n! style=\"text-align:right;\" |{totals.Deaths}\n|}}")
+    county_name = row['county'].title()
+    print(f"|-\n|style=\"text-align:left;\"|[[{county_name} County, {state}|{county_name}]]||{row['case_count']}||{row['death_cases']}")
+  print(f"|-\n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.case_count}\n! style=\"text-align:right;\" |{totals.death_cases}\n|}}")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
-parser.add_argument('state', help='US state for which to present data')
-parser.add_argument('date', help='date for which to present data')
 args = parser.parse_args()
 
 if args.county_table:
-  date = datetime.datetime.strptime(args.date, "%Y-%m-%d")
-  df = get_data_for_date(date)
-  generate_county_table(df, date, args.state)
+  df = get_data()
+  generate_county_table(df, 'Indiana')
 else:
-  frame = pd.DataFrame(data={'Date':[datetime.datetime(2020, 4, 1)],'Province_State':[args.state],'Confirmed':[3029],'Deaths':[113]})
-  # Note: Older files  in Johns Hopkins data have weird data field name changes. So, just start here and move forward.
-  dates = pd.date_range(datetime.datetime(2020, 4, 2), datetime.datetime.today() - datetime.timedelta(days=1))
+  print("THis part needs to be repaired to work with the new data source")
+  # dates = pd.date_range(datetime.datetime(2020, 4, 2), datetime.datetime.today() - datetime.timedelta(days=1))
 
-  for i in dates:
-    df = get_data_for_date(i).assign(Date = i)
-    state = df[df.Province_State.eq(args.state)]
-    frame = frame.append(state, ignore_index=True)
+  # for i in dates:
+  #   df = get_data_for_date(i).assign(Date = i)
+  #   state = df[df.Province_State.eq(args.state)]
+  #   frame = frame.append(state, ignore_index=True)
 
-  frame = frame[frame.Province_State.eq('Indiana')]
-  totals = frame.groupby(['Date'], as_index=False).sum()
-  totals = totals.assign(cases_change=totals.Confirmed.pct_change())
-  totals = totals.assign(deaths_change=totals.Deaths.pct_change())
+  # frame = frame[frame.Province_State.eq('Indiana')]
+  # totals = frame.groupby(['Date'], as_index=False).sum()
+  # totals = totals.assign(cases_change=totals.Confirmed.pct_change())
+  # totals = totals.assign(deaths_change=totals.Deaths.pct_change())
 
-  for index, row in totals.iterrows():
-    print(f"{row['Date'].strftime('%Y-%m-%d')};{row['Deaths']};;{row['Confirmed']};;;{row['Confirmed']};{row['cases_change']:.0%};{row['Deaths']};{row['deaths_change']:.0%}")
+  # for index, row in totals.iterrows():
+  #   print(f"{row['Date'].strftime('%Y-%m-%d')};{row['Deaths']};;{row['Confirmed']};;;{row['Confirmed']};{row['cases_change']:.0%};{row['Deaths']};{row['deaths_change']:.0%}")
