@@ -23,18 +23,12 @@ if args.county_table:
   df = get_data()
   generate_county_table(df, 'Indiana')
 else:
-  print("This part needs to be repaired to work with the new data source")
-  # dates = pd.date_range(datetime.datetime(2020, 4, 2), datetime.datetime.today() - datetime.timedelta(days=1))
+  df = pd.read_csv('incovid.csv')
+  df = df.assign(cases_change=df.cases.pct_change())
+  df = df.assign(deaths_change=df.deaths.pct_change())
+  df = df.fillna(0)
 
-  # for i in dates:
-  #   df = get_data_for_date(i).assign(Date = i)
-  #   state = df[df.Province_State.eq(args.state)]
-  #   frame = frame.append(state, ignore_index=True)
-
-  # frame = frame[frame.Province_State.eq('Indiana')]
-  # totals = frame.groupby(['Date'], as_index=False).sum()
-  # totals = totals.assign(cases_change=totals.Confirmed.pct_change())
-  # totals = totals.assign(deaths_change=totals.Deaths.pct_change())
-
-  # for index, row in totals.iterrows():
-  #   print(f"{row['Date'].strftime('%Y-%m-%d')};{row['Deaths']};;{row['Confirmed']};;;{row['Confirmed']};{row['cases_change']:.0%};{row['Deaths']};{row['deaths_change']:.0%}")
+  for index, row in df.iterrows():
+    row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
+    row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
+    print(f"{row['date']};{row['deaths']};;{row['cases']};;;{row['cases']};{row['cases_change']};{row['deaths']};{row['deaths_change']}")
