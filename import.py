@@ -4,16 +4,16 @@ import pandas as pd
 
 def get_data():
   url = "https://coronavirus.in.gov/map-test/covid_report_county.csv"
-  return pd.read_csv(url)[['county','case_count','death_cases']]
+  return pd.read_csv(url)[['COUNTY_NAME','COVID_COUNT','COVID_DEATHS']]
 
 
 def generate_county_table(data, state):
   totals = data.sum()
   print(f"{{| class=\"wikitable sortable\" style=\"text-align:right\"\n|+Coronavirus disease 2019 (COVID-19) cases in {state}<ref>{{{{Cite web|url=https://coronavirus.in.gov/map-test/covid_report_county.csv|title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19)|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>\n! County || Confirmed Cases || Deaths")
   for index, row in data.iterrows():
-    county_name = row['county'].title().replace("Dekalb", "DeKalb").replace("Laporte", "LaPorte")
-    print(f"|-\n|style=\"text-align:left;\"|[[{county_name} County, {state}|{county_name}]]||{row['case_count']}||{row['death_cases']}")
-  print(f"|-\n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.case_count}\n! style=\"text-align:right;\" |{totals.death_cases}\n|}}")
+    county_name = row['COUNTY_NAME'].title().replace("Dekalb", "DeKalb").replace("Laporte", "LaPorte").replace("Lagrange", "LaGrange")
+    print(f"|-\n|style=\"text-align:left;\"|[[{county_name} County, {state}|{county_name}]]||{row['COVID_COUNT']}||{row['COVID_DEATHS']}")
+  print(f"|-\n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.COVID_COUNT}\n! style=\"text-align:right;\" |{totals.COVID_DEATHS}\n|}}")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
