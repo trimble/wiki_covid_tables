@@ -39,6 +39,12 @@ def generate_info_box(confirmed_cases, all_beds, icu_beds, vents, deaths):
   print("| website = {{URL|https://www.in.gov/coronavirus/}}")
   print("}}")
 
+def generate_template_data(trend):
+  for index, row in trend.iterrows():
+    row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
+    row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
+    print(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
+
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
@@ -68,7 +74,4 @@ if __name__ == "__main__":
     trend = trend.assign(deaths_change=trend.deaths.pct_change())
     trend = trend.fillna(0)
 
-    for index, row in trend.iterrows():
-      row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
-      row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
-      print(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
+    generate_template_data(trend)
