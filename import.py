@@ -2,16 +2,16 @@ import argparse
 import datetime
 import pandas as pd
 
-def get_data():
-  url = f"https://hub.mph.in.gov/dataset/89cfa2e3-3319-4d31-a60d-710f76856588/resource/8b8e6cd7-ede2-4c41-a9bd-4266df783145/download/corona"
+def get_county_data():
+  url = f"https://hub.mph.in.gov/dataset/89cfa2e3-3319-4d31-a60d-710f76856588/resource/8b8e6cd7-ede2-4c41-a9bd-4266df783145/download/covid_report_county.xlsx"
   return pd.read_excel(url)[['COUNTY_NAME','COVID_COUNT','COVID_DEATHS','COVID_TEST']]
 
 def get_beds_and_vents_data():
-  url = f"https://hub.mph.in.gov/dataset/5a905d51-eb50-4a83-8f79-005239bd108b/resource/882a7426-886f-48cc-bbe0-a8d14e3012e4/download/bed_vents"
+  url = f"https://hub.mph.in.gov/dataset/5a905d51-eb50-4a83-8f79-005239bd108b/resource/882a7426-886f-48cc-bbe0-a8d14e3012e4/download/covid_report_bedvent.xlsx"
   return pd.read_excel(url, index_col='STATUS_TYPE')
 
 def get_trend_data():
-  url = f"https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/trend"
+  url = f"https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/covid-19_statewidetestcasedeathtrends.xlsx"
   return pd.read_excel(url, index_col='DATE')
 
 def generate_county_table(data):
@@ -52,7 +52,7 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   if args.county_table:
-    trend = get_data()
+    trend = get_county_data()
     generate_county_table(trend)
   elif args.info_box:
     beds_and_vents = get_beds_and_vents_data()
@@ -68,7 +68,7 @@ if __name__ == "__main__":
   else:
     trend = get_trend_data()
     trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
-    trend = trend[['cases','deaths']]
+    trend = trend[['cases', 'deaths']]
     trend = trend.loc['2020-03-06':]
     trend = trend.assign(cases_change=trend.cases.pct_change())
     trend = trend.assign(deaths_change=trend.deaths.pct_change())
