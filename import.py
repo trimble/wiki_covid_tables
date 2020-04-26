@@ -59,6 +59,7 @@ else:
   trend = get_trend_data()
   trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
   trend = trend[['cases','deaths']]
+  trend = trend.loc['2020-03-06':]
   trend = trend.assign(cases_change=trend.cases.pct_change())
   trend = trend.assign(deaths_change=trend.deaths.pct_change())
   trend = trend.fillna(0)
