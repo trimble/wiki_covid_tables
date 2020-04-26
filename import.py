@@ -17,36 +17,64 @@ def get_trend_data():
 def generate_county_table(data):
   totals = data.sum()
   print("==Statistics==")
-  print(f"{{| class=\"wikitable sortable\" style=\"text-align:right\"\n|+Coronavirus disease 2019 (COVID-19) cases in Indiana Counties<ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/89cfa2e3-3319-4d31-a60d-710f76856588/resource/8b8e6cd7-ede2-4c41-a9bd-4266df783145/download/corona|title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19)|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>\n! County || Confirmed Cases || Deaths")
+  print(f"{{| class=\"wikitable sortable\" style=\"text-align:right\"\n|+Coronavirus disease 2019 (COVID-19) cases in Indiana Counties<ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-county-statistics|title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19)|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>\n! County || Confirmed Cases || Deaths")
   for index, row in data.iterrows():
     county_name = row['COUNTY_NAME'].title().replace("Dekalb", "DeKalb").replace("Laporte", "LaPorte").replace("Lagrange", "LaGrange").replace("St Joseph", "St. Joseph")
     print(f"|- \n|style=\"text-align:left;\"|[[{county_name} County, Indiana|{county_name}]]||{row['COVID_COUNT']:,}||{row['COVID_DEATHS']:,}")
   print(f"|- \n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.COVID_COUNT:,}\n! style=\"text-align:right;\" |{totals.COVID_DEATHS:,}\n|}}")
 
 def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
-  infobox_template = f"""
-    {{{{Infobox outbreak
-    | name = 2020 coronavirus pandemic in Indiana
-    | disease = [[COVID-19]]
-    | virus_strain = [[SARS-CoV-2]]
-    | location = [[Indiana]], US
-    | first_case = [[Indianapolis]]
-    | arrival_date = March 6, 2020
-    | confirmed_cases = {confirmed_cases:,}
-    | hospitalized_cases = {all_beds:,}(current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
-    | critical_cases = {icu_beds:,}<ref name=beds-vents/>
-    | ventilator_cases = {vents:,}<ref name=beds-vents/>
-    | deaths = {deaths:,}
-    | website = {{URL|https://www.in.gov/coronavirus/}}
-    }}}}
+  infobox_template = f"""{{{{Infobox outbreak
+| name = 2020 coronavirus pandemic in Indiana
+| disease = [[COVID-19]]
+| virus_strain = [[SARS-CoV-2]]
+| location = [[Indiana]], US
+| first_case = [[Indianapolis]]
+| arrival_date = March 6, 2020
+| confirmed_cases = {confirmed_cases:,}
+| hospitalized_cases = {all_beds:,}(current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+| critical_cases = {icu_beds:,}<ref name=beds-vents/>
+| ventilator_cases = {vents:,}<ref name=beds-vents/>
+| deaths = {deaths:,}
+| website = {{URL|https://www.in.gov/coronavirus/}}
+}}}}
   """
   print(infobox_template)
 
 def generate_template_data(trend):
+  list = []
   for index, row in trend.iterrows():
     row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
     row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
-    print(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
+    list.append(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
+
+  separator = '\n'
+
+  template = f"""{{{{main|2020 coronavirus pandemic in Indiana}}}}<onlyinclude>
+{{{{Medical cases chart
+|barwidth=medium
+
+|disease=COVID-19
+|location=Indiana|location2=United States
+|outbreak=2019–20 coronavirus pandemic
+
+|recoveries=n
+|right2=# of deaths
+|divisor=55
+|numwidth=dddd
+|data= {separator.join(list)}
+|caption='''Cases:''' The number of cases confirmed in Indiana. <br>
+'''Source:''' <ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-case-trend|title=ISDH - Novel Coronavirus|website=ISDH|language=en-US|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+}}}}</onlyinclude>
+{{{{clear}}}}
+{{{{template reference list}}}}
+{{{{U.S. COVID-19 case charts}}}}
+{{{{2019–20 coronavirus pandemic|data|state=expanded}}}}
+[[Category:2019–20 coronavirus pandemic in the United States medical cases charts|Indiana]]
+[[Category:Indiana templates]]
+  """
+
+  print(template)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
