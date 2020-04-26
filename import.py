@@ -29,8 +29,8 @@ parser.add_argument('-i', '--info_box', help='generate infobox in wikimedia form
 args = parser.parse_args()
 
 if args.county_table:
-  cases = get_data()
-  generate_county_table(cases)
+  trend = get_data()
+  generate_county_table(trend)
 elif args.info_box:
   beds_and_vents = get_beds_and_vents_data()
   all_beds = beds_and_vents.loc['beds_all_occupied_beds_covid_19', 'TOTAL']
@@ -56,12 +56,14 @@ elif args.info_box:
   print("| website = {{URL|https://www.in.gov/coronavirus/}}")
   print("}}")
 else:
-  cases = pd.read_csv('incovid.csv')
-  cases = cases.assign(cases_change=cases.cases.pct_change())
-  cases = cases.assign(deaths_change=cases.deaths.pct_change())
-  cases = cases.fillna(0)
+  trend = get_trend_data()
+  trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
+  trend = trend[['cases','deaths']]
+  trend = trend.assign(cases_change=trend.cases.pct_change())
+  trend = trend.assign(deaths_change=trend.deaths.pct_change())
+  trend = trend.fillna(0)
 
-  for index, row in cases.iterrows():
+  for index, row in trend.iterrows():
     row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
     row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
-    print(f"{row['date']};{row['deaths']:,};;{row['cases']:,};;;{row['cases']:,};{row['cases_change']};{row['deaths']:,};{row['deaths_change']}")
+    print(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
