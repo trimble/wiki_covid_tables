@@ -24,20 +24,23 @@ def generate_county_table(data):
   print(f"|- \n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.COVID_COUNT:,}\n! style=\"text-align:right;\" |{totals.COVID_DEATHS:,}\n|}}")
 
 def generate_info_box(confirmed_cases, all_beds, icu_beds, vents, deaths):
-  print("{{Infobox outbreak")
-  print(f"| name = 2020 coronavirus pandemic in Indiana")
-  print(f"| disease = [[COVID-19]]")
-  print(f"| virus_strain = [[SARS-CoV-2]]")
-  print(f"| location = [[Indiana]], US")
-  print(f"| first_case = [[Indianapolis]]")
-  print(f"| arrival_date = March 6, 2020")
-  print(f"| confirmed_cases = {confirmed_cases:,}")
-  print(f"| hospitalized_cases = {all_beds:,}(current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>")
-  print(f"| critical_cases = {icu_beds:,}<ref name=beds-vents/>")
-  print(f"| ventilator_cases = {vents:,}<ref name=beds-vents/>")
-  print(f"| deaths = {deaths:,}")
-  print("| website = {{URL|https://www.in.gov/coronavirus/}}")
-  print("}}")
+  infobox_template = f"""
+    {{{{Infobox outbreak
+    | name = 2020 coronavirus pandemic in Indiana
+    | disease = [[COVID-19]]
+    | virus_strain = [[SARS-CoV-2]]
+    | location = [[Indiana]], US
+    | first_case = [[Indianapolis]]
+    | arrival_date = March 6, 2020
+    | confirmed_cases = {confirmed_cases:,}
+    | hospitalized_cases = {all_beds:,}(current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+    | critical_cases = {icu_beds:,}<ref name=beds-vents/>
+    | ventilator_cases = {vents:,}<ref name=beds-vents/>
+    | deaths = {deaths:,}
+    | website = {{URL|https://www.in.gov/coronavirus/}}
+    }}}}
+  """
+  print(infobox_template)
 
 def generate_template_data(trend):
   for index, row in trend.iterrows():
