@@ -23,24 +23,7 @@ def generate_county_table(data):
     print(f"|- \n|style=\"text-align:left;\"|[[{county_name} County, Indiana|{county_name}]]||{row['COVID_COUNT']:,}||{row['COVID_DEATHS']:,}")
   print(f"|- \n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.COVID_COUNT:,}\n! style=\"text-align:right;\" |{totals.COVID_DEATHS:,}\n|}}")
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
-parser.add_argument('-i', '--info_box', help='generate infobox in wikimedia format', action='store_true')
-args = parser.parse_args()
-
-if args.county_table:
-  trend = get_data()
-  generate_county_table(trend)
-elif args.info_box:
-  beds_and_vents = get_beds_and_vents_data()
-  all_beds = beds_and_vents.loc['beds_all_occupied_beds_covid_19', 'TOTAL']
-  icu_beds = beds_and_vents.loc['beds_icu_occupied_beds_covid_19', 'TOTAL']
-  vents = beds_and_vents.loc['vents_all_in_use_covid_19', 'TOTAL']
-
-  trend = get_trend_data()
-  deaths = trend.loc[trend.index[-1], 'COVID_DEATHS_CUMSUM']
-  confirmed_cases = trend.loc[trend.index[-1], 'COVID_COUNT_CUMSUM']
-
+def generate_info_box(confirmed_cases, all_beds, icu_beds, vents, deaths):
   print("{{Infobox outbreak")
   print(f"| name = 2020 coronavirus pandemic in Indiana")
   print(f"| disease = [[COVID-19]]")
@@ -55,16 +38,37 @@ elif args.info_box:
   print(f"| deaths = {deaths:,}")
   print("| website = {{URL|https://www.in.gov/coronavirus/}}")
   print("}}")
-else:
-  trend = get_trend_data()
-  trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
-  trend = trend[['cases','deaths']]
-  trend = trend.loc['2020-03-06':]
-  trend = trend.assign(cases_change=trend.cases.pct_change())
-  trend = trend.assign(deaths_change=trend.deaths.pct_change())
-  trend = trend.fillna(0)
 
-  for index, row in trend.iterrows():
-    row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
-    row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
-    print(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-c', '--county_table', help='generate county-by-county infection table in wikimedia format', action='store_true')
+  parser.add_argument('-i', '--info_box', help='generate infobox in wikimedia format', action='store_true')
+  args = parser.parse_args()
+
+  if args.county_table:
+    trend = get_data()
+    generate_county_table(trend)
+  elif args.info_box:
+    beds_and_vents = get_beds_and_vents_data()
+    all_beds = beds_and_vents.loc['beds_all_occupied_beds_covid_19', 'TOTAL']
+    icu_beds = beds_and_vents.loc['beds_icu_occupied_beds_covid_19', 'TOTAL']
+    vents = beds_and_vents.loc['vents_all_in_use_covid_19', 'TOTAL']
+
+    trend = get_trend_data()
+    deaths = trend.loc[trend.index[-1], 'COVID_DEATHS_CUMSUM']
+    confirmed_cases = trend.loc[trend.index[-1], 'COVID_COUNT_CUMSUM']
+
+    generate_info_box(confirmed_cases, all_beds, icu_beds, vents, deaths)
+  else:
+    trend = get_trend_data()
+    trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
+    trend = trend[['cases','deaths']]
+    trend = trend.loc['2020-03-06':]
+    trend = trend.assign(cases_change=trend.cases.pct_change())
+    trend = trend.assign(deaths_change=trend.deaths.pct_change())
+    trend = trend.fillna(0)
+
+    for index, row in trend.iterrows():
+      row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
+      row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
+      print(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
