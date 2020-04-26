@@ -23,7 +23,7 @@ def generate_county_table(data):
     print(f"|- \n|style=\"text-align:left;\"|[[{county_name} County, Indiana|{county_name}]]||{row['COVID_COUNT']:,}||{row['COVID_DEATHS']:,}")
   print(f"|- \n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.COVID_COUNT:,}\n! style=\"text-align:right;\" |{totals.COVID_DEATHS:,}\n|}}")
 
-def generate_info_box(confirmed_cases, all_beds, icu_beds, vents, deaths):
+def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
   infobox_template = f"""
     {{{{Infobox outbreak
     | name = 2020 coronavirus pandemic in Indiana
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     deaths = trend.loc[trend.index[-1], 'COVID_DEATHS_CUMSUM']
     confirmed_cases = trend.loc[trend.index[-1], 'COVID_COUNT_CUMSUM']
 
-    generate_info_box(confirmed_cases, all_beds, icu_beds, vents, deaths)
+    generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths)
   else:
     trend = get_trend_data()
     trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
