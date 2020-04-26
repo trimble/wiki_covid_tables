@@ -62,7 +62,8 @@ def generate_template_data(trend):
 |right2=# of deaths
 |divisor=55
 |numwidth=dddd
-|data= {separator.join(list)}
+|data=
+{separator.join(list)}
 |caption='''Cases:''' The number of cases confirmed in Indiana. <br>
 '''Source:''' <ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-case-trend|title=ISDH - Novel Coronavirus|website=ISDH|language=en-US|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 }}}}</onlyinclude>
