@@ -67,7 +67,6 @@ def generate_template_data(trend):
 |caption='''Cases:''' The number of cases confirmed in Indiana. <br>
 '''Source:''' <ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-case-trend|title=ISDH - Novel Coronavirus|website=ISDH|language=en-US|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 }}}}</onlyinclude>
-{{{{clear}}}}
 {{{{template reference list}}}}
 {{{{U.S. COVID-19 case charts}}}}
 {{{{2019–20 coronavirus pandemic|data|state=expanded}}}}
