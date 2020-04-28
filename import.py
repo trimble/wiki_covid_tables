@@ -60,7 +60,6 @@ def generate_template_data(trend):
 
 |recoveries=n
 |right2=# of deaths
-|divisor=55
 |numwidth=dddd
 |data=
 {separator.join(list)}
