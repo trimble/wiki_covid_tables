@@ -11,7 +11,7 @@ def get_beds_and_vents_data():
   return pd.read_excel(url, index_col='STATUS_TYPE')
 
 def get_trend_data():
-  url = f"https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/covid-19_statewidetestcasedeathtrends.xlsx"
+  url = f"https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/covid-19_statewidetestcasedeathtrends_428.xlsx"
   return pd.read_excel(url, index_col='DATE')
 
 def generate_county_table(data):
