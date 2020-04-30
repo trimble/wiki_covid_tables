@@ -37,8 +37,8 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | ventilator_cases = {vents:,}<ref name=beds-vents/>
 | deaths = {deaths:,}
 | website = {{{{URL|https://www.in.gov/coronavirus/}}}}
-}}}}
-  """
+}}}}"""
+
   print(infobox_template)
 
 def generate_template_data(trend):
@@ -70,8 +70,7 @@ def generate_template_data(trend):
 {{{{U.S. COVID-19 case charts}}}}
 {{{{2019–20 coronavirus pandemic|data|state=expanded}}}}
 [[Category:2019–20 coronavirus pandemic in the United States medical cases charts|Indiana]]
-[[Category:Indiana templates]]
-  """
+[[Category:Indiana templates]]"""
 
   print(template)
 
