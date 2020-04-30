@@ -36,7 +36,7 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | critical_cases = {icu_beds:,}<ref name=beds-vents/>
 | ventilator_cases = {vents:,}<ref name=beds-vents/>
 | deaths = {deaths:,}
-| website = {{URL|https://www.in.gov/coronavirus/}}
+| website = {{{{URL|https://www.in.gov/coronavirus/}}}}
 }}}}
   """
   print(infobox_template)
