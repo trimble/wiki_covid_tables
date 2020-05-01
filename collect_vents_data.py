@@ -14,10 +14,8 @@ if __name__ == "__main__":
   new_data = get_todays_beds_and_vents_data()
   old_data = pd.read_csv(file, index_col=0)
   old_data.index = pd.to_datetime(old_data.index)
-  old_data = old_data.append(new_data)
-  index = old_data.index
-  is_duplicate = index.duplicated(keep="last")
-  not_duplicate = ~is_duplicate
-  old_data = old_data[not_duplicate]
-  print(old_data)
+
+  data = old_data.append(new_data)
+  data = data.loc[~data.index.duplicated(keep='last')]
+
   old_data.to_csv(file)
