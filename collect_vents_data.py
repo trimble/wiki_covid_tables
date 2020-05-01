@@ -16,6 +16,6 @@ if __name__ == "__main__":
   old_data.index = pd.to_datetime(old_data.index)
 
   data = old_data.append(new_data)
-  data = data.loc[~data.index.duplicated(keep='last')]
+  data = data[~data.index.duplicated(keep='last')]
 
   old_data.to_csv(file)
