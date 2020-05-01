@@ -17,5 +17,6 @@ if __name__ == "__main__":
 
   data = old_data.append(new_data)
   data = data[~data.index.duplicated(keep='last')]
+  print(data)
 
-  old_data.to_csv(file)
+  data.to_csv(file)
