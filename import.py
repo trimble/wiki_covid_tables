@@ -16,12 +16,57 @@ def get_trend_data():
 
 def generate_county_table(data):
   totals = data.sum()
-  print("==Statistics==")
-  print(f"{{| class=\"wikitable sortable\" style=\"text-align:right\"\n|+Coronavirus disease 2019 (COVID-19) cases in Indiana Counties<ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-county-statistics|title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19)|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>\n! County || Confirmed Cases || Deaths")
+
+  list = []
   for index, row in data.iterrows():
     county_name = row['COUNTY_NAME'].title().replace("Dekalb", "DeKalb").replace("Laporte", "LaPorte").replace("Lagrange", "LaGrange").replace("St Joseph", "St. Joseph")
-    print(f"|- \n|style=\"text-align:left;\"|[[{county_name} County, Indiana|{county_name}]]||{row['COVID_COUNT']:,}||{row['COVID_DEATHS']:,}")
-  print(f"|- \n! style=\"text-align:right;\" |Total\n! style=\"text-align:right;\" |{totals.COVID_COUNT:,}\n! style=\"text-align:right;\" |{totals.COVID_DEATHS:,}\n|}}")
+    list.append("|-")
+    list.append(f"! style=\"padding:0px 2px;\" |[[{county_name} County, Indiana|{county_name}]]")
+    # print(f"|- \n|style=\"text-align:left;\"|[[{county_name} County, Indiana|{county_name}]]||{row['COVID_COUNT']:,}||{row['COVID_DEATHS']:,}")
+    list.append(f"| style=\"padding:0px 2px;\" |{row['COVID_COUNT']:,}")
+    list.append(f"| style=\"padding:0px 2px;\" |{row['COVID_DEATHS']:,}")
+    list.append(f"| style=\"padding:0px 2px;\" |{{{{–}}}}")
+    list.append(f"| style=\"padding:0px 2px;\" |{row['population']:,}")
+    list.append(f"| style=\"padding:0px 2px;\" |{(row['COVID_COUNT']/(row.population/float(100000))):,.01f}")
+    list.append(f"| style=\"padding:0px 2px;\" |")
+
+  separator = '\n'
+
+
+  table_template = f"""<div class="tp-container" style="float:left;max-width:100%;overflow-y:auto;padding-right:0em;margin: 0 0 0.5em 1em">
+{{| class="wikitable plainrowheaders sortable" style="text-align:right; font-size:85%; margin:0"
+|+ {{{{Navbar-collapsible|{{{{resize|98%|[[2020 coronavirus pandemic in Indiana|COVID-19 cases in Indiana]] by [[List of counties in Indiana|county]]}}}}|2020 coronavirus pandemic data/Indiana medical cases by county}}}}
+|-
+! style="text-align:right; padding-right:3px;" scope="col" |County{{{{efn|County of residence for individual with a positive test.}}}}
+! style="text-align:right; padding-right:3px;" scope="col" |Cases
+! style="text-align:right; padding-right:3px;" scope="col" |Deaths
+! style="text-align:right; padding-right:3px;" scope="col" |{{{{abbr|Recov.|Recovered cases}}}}{{{{efn|name=na|"–" denotes that no data is currently available for listed county, not that the value is zero.}}}}{{{{efn|ISDH is not providing recovered case numbers. Local health departments could be providing this information at their discretion.}}}}
+! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |Population<ref>{{{{cite web |title=County Population Totals: 2010-2019|url=https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html|accessdate=2020-05-02}}}}</ref>
+! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |{{{{abbr|Cases / 100k|Cases per 100,000 in population}}}}
+! style="text-align:right; padding-right:4px;" scope="col" rowspan="2" class="unsortable" |{{{{abbr|Ref.|References & Notes}}}}
+|-
+! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''92 / 92'''
+! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{totals.COVID_COUNT:,}'''
+! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{totals.COVID_DEATHS:,}'''
+! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{{{{–}}}}'''
+! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{totals.population:,}'''
+! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{(totals.COVID_COUNT/(totals.population/float(100000))):,.01f}'''
+{separator.join(list)}
+|- style="text-align:center;" class="sortbottom"
+| colspan="7" | {{{{resize|Updated May 1, 2020}}}}<br/>{{{{resize|Data is publicly reported by Indiana State Department of Health}}}}<ref>{{{{cite web |title=Indiana COVID-19 Data Report |url=https://www.coronavirus.in.gov/2393.htm |website=Indiana State Department of Health |accessdate=May 1, 2020}}}}</ref><ref>{{{{cite web |title=COVID-19 County Statistics |url=https://hub.mph.in.gov/dataset/covid-19-county-statistics |website=Indiana State Department of Health |accessdate={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+|- style="text-align:center;" class="sortbottom"
+| colspan="7" style="width:1px;"| {{{{notelist}}}}
+|}}
+</div>
+<noinclude>
+{{{{documentation}}}}
+
+[[Category:2020 coronavirus pandemic data/United States medical cases by administrative subdivisions|Indiana]]
+[[Category:Indiana templates]]
+</noinclude>
+"""
+
+  print(table_template)
 
 def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
   infobox_template = f"""{{{{Infobox outbreak
@@ -96,6 +141,98 @@ if __name__ == "__main__":
 
   if args.county_table:
     trend = get_county_data()
+    trend = trend.assign(population=[35777,
+      379299,
+      83779,
+      8748,
+      11758,
+      67843,
+      15092,
+      20257,
+      37689,
+      118302,
+      26225,
+      32399,
+      10577,
+      33351,
+      49458,
+      26559,
+      43475,
+      114135,
+      42736,
+      206341,
+      23102,
+      78522,
+      16346,
+      22758,
+      19974,
+      33659,
+      65769,
+      31922,
+      338011,
+      78168,
+      40515,
+      170311,
+      47972,
+      82544,
+      36520,
+      44231,
+      33562,
+      20436,
+      32308,
+      27735,
+      158167,
+      36594,
+      79456,
+      39614,
+      485493,
+      109888,
+      45370,
+      129569,
+      964582,
+      46258,
+      10255,
+      35516,
+      148431,
+      38338,
+      70489,
+      13984,
+      47744,
+      5875,
+      19646,
+      20799,
+      16937,
+      19169,
+      12389,
+      170389,
+      25427,
+      12353,
+      37576,
+      24665,
+      28324,
+      16581,
+      271826,
+      23873,
+      44729,
+      20277,
+      22995,
+      34594,
+      20669,
+      10751,
+      195732,
+      15148,
+      7054,
+      181451,
+      15498,
+      107038,
+      30996,
+      8265,
+      62998,
+      28036,
+      65884,
+      28296,
+      24102,
+      33964])
     generate_county_table(trend)
   elif args.info_box:
     beds_and_vents = get_beds_and_vents_data()
