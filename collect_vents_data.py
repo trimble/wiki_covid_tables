@@ -38,9 +38,10 @@ if __name__ == "__main__":
       'beds_available_icu_beds_total': 'Available'
       })
     icu_plot = icu_data.plot.area(title='ICU Bed Availability in Indiana')
-    plt.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
+    icu_plot.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
     icu_plot.set_xlabel('Date')
     icu_plot.set_ylabel('#')
+    plt.savefig('icu.png')
 
     vent_data = data[['vents_all_in_use_covid_19', 'vents_non_covid_pts_on_vents', 'vents_all_available_vents_not_in_use']]
     vent_data = vent_data.rename(columns={
@@ -52,6 +53,7 @@ if __name__ == "__main__":
     vent_plot.legend(bbox_to_anchor=(1,1))
     vent_plot.set_xlabel('Date')
     vent_plot.set_ylabel('#')
-    plt.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
+    vent_plot.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
 
+    plt.savefig('vents.png')
     plt.show()
