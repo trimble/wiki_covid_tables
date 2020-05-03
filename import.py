@@ -81,6 +81,8 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | critical_cases = {icu_beds:,}<ref name=beds-vents/>
 | ventilator_cases = {vents:,}<ref name=beds-vents/>
 | deaths = {deaths:,}
+| map1 = COVID-19 Prevalence in Indiana by county.svg
+| legend1 = {{2020 coronavirus pandemic in the United States prevalence legend|state=Indiana}}
 | website = {{{{URL|https://www.in.gov/coronavirus/}}}}
 }}}}"""
 
