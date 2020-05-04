@@ -179,7 +179,7 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | deaths = {deaths:,}
 | map1 = COVID-19 Prevalence in Indiana by county.svg
 | legend1 = {{{{COVID-19 pandemic in the United States prevalence legend|state=Indiana}}}}
-| website = {{{{URL|https://www.in.gov/coronavirus/}}}}
+| website = {{{{URL|https://www.in.gov/coronavirus/}}}}<br>{{{{URL|https://backontrack.in.gov/}}}}
 }}}}"""
 
   print(infobox_template)
