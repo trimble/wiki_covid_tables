@@ -131,7 +131,7 @@ def generate_county_table(data):
 
   table_template = f"""<div class="tp-container" style="float:left;max-width:100%;overflow-y:auto;padding-right:0em;margin: 0 0 0.5em 1em">
 {{| class="wikitable plainrowheaders sortable" style="text-align:right; font-size:85%; margin:0"
-|+ {{{{Navbar-collapsible|{{{{resize|98%|[[2020 coronavirus pandemic in Indiana|COVID-19 cases in Indiana]] by [[List of counties in Indiana|county]]}}}}|2020 coronavirus pandemic data/Indiana medical cases by county}}}}
+|+ {{{{Navbar-collapsible|{{{{resize|98%|[[COVID-19 pandemic in Indiana|COVID-19 cases in Indiana]] by [[List of counties in Indiana|county]]}}}}|COVID-19 pandemic data/Indiana medical cases by county}}}}
 |-
 ! style="text-align:right; padding-right:3px;" scope="col" |County{{{{efn|County of residence for individual with a positive test.}}}}
 ! style="text-align:right; padding-right:3px;" scope="col" |Cases
@@ -157,7 +157,7 @@ def generate_county_table(data):
 <noinclude>
 {{{{documentation}}}}
 
-[[Category:2020 coronavirus pandemic data/United States medical cases by administrative subdivisions|Indiana]]
+[[Category:COVID-19 pandemic data/United States medical cases by administrative subdivisions|Indiana]]
 [[Category:Indiana templates]]
 </noinclude>
 """
@@ -166,19 +166,19 @@ def generate_county_table(data):
 
 def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
   infobox_template = f"""{{{{Infobox outbreak
-| name = 2020 coronavirus pandemic in Indiana
+| name = COVID-19 pandemic in Indiana
 | disease = [[COVID-19]]
 | virus_strain = [[SARS-CoV-2]]
 | location = [[Indiana]], US
 | first_case = [[Indianapolis]]
 | arrival_date = March 6, 2020
 | confirmed_cases = {confirmed_cases:,}
-| hospitalized_cases = {all_beds:,}(current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+| hospitalized_cases = {all_beds:,} (current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 | critical_cases = {icu_beds:,}<ref name=beds-vents/>
 | ventilator_cases = {vents:,}<ref name=beds-vents/>
 | deaths = {deaths:,}
 | map1 = COVID-19 Prevalence in Indiana by county.svg
-| legend1 = {{2020 coronavirus pandemic in the United States prevalence legend|state=Indiana}}
+| legend1 = {{{{COVID-19 pandemic in the United States prevalence legend|state=Indiana}}}}
 | website = {{{{URL|https://www.in.gov/coronavirus/}}}}
 }}}}"""
 
@@ -193,13 +193,13 @@ def generate_template_data(trend):
 
   separator = '\n'
 
-  template = f"""{{{{main|2020 coronavirus pandemic in Indiana}}}}<onlyinclude>
+  template = f"""{{{{main|COVID-19 pandemic in Indiana}}}}<onlyinclude>
 {{{{Medical cases chart
 |barwidth=medium
 
 |disease=COVID-19
 |location=Indiana|location2=United States
-|outbreak=2019–20 coronavirus pandemic
+|outbreak=COVID-19 pandemic
 
 |recoveries=n
 |right2=# of deaths
@@ -222,8 +222,8 @@ def generate_template_data(trend):
 }}}}</onlyinclude>
 {{{{template reference list}}}}
 {{{{U.S. COVID-19 case charts}}}}
-{{{{2019–20 coronavirus pandemic|data|state=expanded}}}}
-[[Category:2019–20 coronavirus pandemic in the United States medical cases charts|Indiana]]
+{{{{COVID-19 pandemic|data|state=expanded}}}}
+[[Category:COVID-19 pandemic in the United States medical cases charts|Indiana]]
 [[Category:Indiana templates]]"""
 
   print(template)
