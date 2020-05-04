@@ -207,13 +207,10 @@ def generate_template_data(trend):
 
 |togglesbar=
 <div class="nomobile" style="text-align:center">
-{{{{Medical cases chart/Month toggle button|jan}}}}
-{{{{Medical cases chart/Month toggle button|feb}}}}
 {{{{Medical cases chart/Month toggle button|mar}}}}
 {{{{Medical cases chart/Month toggle button|apr}}}}
 {{{{Medical cases chart/Month toggle button|may}}}}
-<span class="mw-collapsible mw-customtoggle-l15 mw-customtoggle-mar-l15 mw-customtoggle-apr-l15 mw-customtoggle-may-l15 mw-collapsed" id="mw-customcollapsible-l15" style="padding:0 8px">Last 15 days</span>
-<span class="mw-collapsible mw-customtoggle-l15 mw-customtoggle-mar-l15 mw-customtoggle-apr-l15 mw-customtoggle-may-l15" id="mw-customcollapsible-l15" style="border:2px solid lightblue; padding:0 8px">Last 15 days</span>
+{{{{Medical cases chart/Month toggle button|l15}}}}
 </div>
 
 |collapsible=y
