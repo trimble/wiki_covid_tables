@@ -37,7 +37,7 @@ if __name__ == "__main__":
       'bed_occupied_icu_non_covid': 'Non-COVID-19',
       'beds_available_icu_beds_total': 'Available'
       })
-    icu_plot = icu_data.plot.area(title='ICU Bed Availability in Indiana')
+    icu_plot = icu_data.plot.area(title='ICU Bed Use in Indiana')
     icu_plot.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
     icu_plot.set_xlabel('Date')
     icu_plot.set_ylabel('#')
@@ -49,7 +49,7 @@ if __name__ == "__main__":
       'vents_non_covid_pts_on_vents': 'Non-COVID-19',
       'vents_all_available_vents_not_in_use': 'Available'
       })
-    vent_plot = vent_data.plot.area(title='Ventilator Availability in Indiana')
+    vent_plot = vent_data.plot.area(title='Ventilator Use in Indiana')
     vent_plot.legend(bbox_to_anchor=(1,1))
     vent_plot.set_xlabel('Date')
     vent_plot.set_ylabel('#')
