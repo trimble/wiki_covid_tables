@@ -31,29 +31,37 @@ if __name__ == "__main__":
     data.to_csv(file)
 
   if args.generate_graphs:
-    icu_data = data[['beds_icu_occupied_beds_covid_19', 'bed_occupied_icu_non_covid', 'beds_available_icu_beds_total']]
-    icu_data = icu_data.rename(columns={
-      'beds_icu_occupied_beds_covid_19': 'COVID-19',
-      'bed_occupied_icu_non_covid': 'Non-COVID-19',
-      'beds_available_icu_beds_total': 'Available'
-      })
-    icu_plot = icu_data.plot.area(title='ICU Bed Availability in Indiana')
-    icu_plot.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
+    icu_data = data[["beds_icu_total"]]
+    # icu_data = icu_data.rename(columns={
+    #   'beds_icu_occupied_beds_covid_19': 'COVID-19',
+    #   'bed_occupied_icu_non_covid': 'Non-COVID-19',
+    #   'beds_available_icu_beds_total': 'Available'
+    #   })
+
+    icu_plot = icu_data.plot.line(title='ICU Bed Availability in Indiana',ylim={0,3500}, grid=True)
+    for index, row in icu_data.iterrows():
+      label = f"{row['beds_icu_total']}"
+      icu_plot.annotate(label, # this is the text
+                  (index,row['beds_icu_total']), # this is the point to label
+                  textcoords="offset points", # how to position the text
+                  xytext=(0,-10), # distance from text to points (x,y)
+                  ha='center') # horizontal alignment can be left, right or center
+    icu_plot.legend(loc='lower left', bbox_to_anchor=(0, 0))
     icu_plot.set_xlabel('Date')
     icu_plot.set_ylabel('#')
     plt.savefig('icu.png')
 
-    vent_data = data[['vents_all_in_use_covid_19', 'vents_non_covid_pts_on_vents', 'vents_all_available_vents_not_in_use']]
-    vent_data = vent_data.rename(columns={
-      'vents_all_in_use_covid_19': 'COVID-19',
-      'vents_non_covid_pts_on_vents': 'Non-COVID-19',
-      'vents_all_available_vents_not_in_use': 'Available'
-      })
-    vent_plot = vent_data.plot.area(title='Ventilator Availability in Indiana')
-    vent_plot.legend(bbox_to_anchor=(1,1))
-    vent_plot.set_xlabel('Date')
-    vent_plot.set_ylabel('#')
-    vent_plot.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
+    # vent_data = data[['vents_all_in_use_covid_19', 'vents_non_covid_pts_on_vents', 'vents_all_available_vents_not_in_use']]
+    # vent_data = vent_data.rename(columns={
+    #   'vents_all_in_use_covid_19': 'COVID-19',
+    #   'vents_non_covid_pts_on_vents': 'Non-COVID-19',
+    #   'vents_all_available_vents_not_in_use': 'Available'
+    #   })
+    # vent_plot = vent_data.plot.area(title='Ventilator Availability in Indiana')
+    # vent_plot.legend(bbox_to_anchor=(1,1))
+    # vent_plot.set_xlabel('Date')
+    # vent_plot.set_ylabel('#')
+    # vent_plot.legend(loc='upper left', bbox_to_anchor=(0, 1.0))
 
     plt.savefig('vents.png')
     plt.show()
