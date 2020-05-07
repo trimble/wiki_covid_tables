@@ -122,10 +122,8 @@ def generate_county_table(data):
     list.append(f"! style=\"padding:0px 2px;\" |[[{county_name} County, Indiana|{county_name}]]")
     list.append(f"| style=\"padding:0px 2px;\" |{row['COVID_COUNT']:,}")
     list.append(f"| style=\"padding:0px 2px;\" |{row['COVID_DEATHS']:,}")
-    list.append(f"| style=\"padding:0px 2px;\" |{{{{–}}}}")
     list.append(f"| style=\"padding:0px 2px;\" |{row['population']:,}")
     list.append(f"| style=\"padding:0px 2px;\" |{(row['COVID_COUNT']/(row.population/float(100000))):,.01f}")
-    list.append(f"| style=\"padding:0px 2px;\" |")
 
   separator = '\n'
 
@@ -133,18 +131,15 @@ def generate_county_table(data):
 {{| class="wikitable plainrowheaders sortable" style="text-align:right; font-size:85%; margin:0"
 |+ {{{{Navbar-collapsible|{{{{resize|98%|[[COVID-19 pandemic in Indiana|COVID-19 cases in Indiana]] by [[List of counties in Indiana|county]]}}}}|COVID-19 pandemic data/Indiana medical cases by county}}}}
 |-
-! style="text-align:right; padding-right:3px;" scope="col" |County{{{{efn|County of residence for individual with a positive test.}}}}
+! style="text-align:right; padding-right:3px;" scope="col" |County{{{{efn|County of residence for individual with a positive test}}}}
 ! style="text-align:right; padding-right:3px;" scope="col" |Cases
 ! style="text-align:right; padding-right:3px;" scope="col" |Deaths
-! style="text-align:right; padding-right:3px;" scope="col" |{{{{abbr|Recov.|Recovered cases}}}}{{{{efn|name=na|"–" denotes that no data is currently available for listed county, not that the value is zero. ISDH is not currently providing recovered case numbers.}}}}
 ! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |Population<ref>{{{{cite web |title=County Population Totals: 2010-2019|url=https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html|accessdate=2020-05-02}}}}</ref>
 ! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |{{{{abbr|Cases / 100k|Cases per 100,000 in population}}}}
-! style="text-align:right; padding-right:4px;" scope="col" rowspan="2" class="unsortable" |{{{{abbr|Ref.|References & Notes}}}}
 |-
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''92 / 92'''
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{totals.COVID_COUNT:,}'''
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{totals.COVID_DEATHS:,}'''
-! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{{{{–}}}}'''
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{totals.population:,}'''
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{(totals.COVID_COUNT/(totals.population/float(100000))):,.01f}'''
 {separator.join(list)}
