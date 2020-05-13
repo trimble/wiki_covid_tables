@@ -197,7 +197,7 @@ def generate_template_data(trend):
 |recoveries = no <!-- ISDH is not reporting recoveries -->
 |numwidth   = dddd
 |rowheight  = 1.2
-|duration   = 20
+|duration   = 28
 |altlbl1    = Total Confirmed Cases
 |right2     = # of deaths
 |collapsible=y
