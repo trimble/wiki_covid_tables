@@ -184,39 +184,28 @@ The [[COVID-19 pandemic]] was confirmed to have reached the U.S. state of [[Indi
 def generate_template_data(trend):
   list = []
   for index, row in trend.iterrows():
-    row['deaths_change'] = f"{row['deaths_change']:.0%}" if row['deaths_change'] else ''
-    row['cases_change'] = f"{row['cases_change']:.0%}" if row['cases_change'] else ''
-    list.append(f"{index};{row['deaths']:,.0f};;{row['cases']:,.0f};;;{row['cases']:,.0f};{row['cases_change']};{row['deaths']:,.0f};{row['deaths_change']}")
+    list.append(f"{index};{row['deaths']:.0f};;{row['cases']:.0f}")
 
   separator = '\n'
 
   template = f"""{{{{main|COVID-19 pandemic in Indiana}}}}<onlyinclude>
 {{{{Medical cases chart
-|barwidth=medium
-
-|disease=COVID-19
-|location=Indiana|location2=United States
-|outbreak=COVID-19 pandemic
-
-|recoveries=n
-|right2=# of deaths
-|numwidth=dddd
-
-|togglesbar=
-<div class="nomobile" style="text-align:center">
-{{{{Medical cases chart/Month toggle button|mar}}}}
-{{{{Medical cases chart/Month toggle button|apr}}}}
-{{{{Medical cases chart/Month toggle button|may}}}}
-{{{{Medical cases chart/Month toggle button|l15}}}}
-</div>
-
+|disease    = COVID-19
+|location   = Indiana
+|location2  = United States
+|outbreak   = COVID-19 pandemic
+|recoveries = no <!-- ISDH is not reporting recoveries -->
+|numwidth   = dddd
+|rowheight  = 1.2
+|duration   = 20
+|altlbl1    = Total Confirmed Cases
+|right2     = # of deaths
 |collapsible=y
-
-|data=
+|data       =
 {separator.join(list)}
-|caption='''Cases:''' The number of cases confirmed in Indiana. <br>
-'''Source:''' <ref>{{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-case-trend|title=ISDH - Novel Coronavirus|website=ISDH|language=en-US|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
-}}}}</onlyinclude>
+|caption    = '''Source:''' {{{{Cite web|url=https://hub.mph.in.gov/dataset/covid-19-case-trend|title=ISDH - Novel Coronavirus|website=ISDH|language=en-US|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}
+}}}}
+</onlyinclude>
 {{{{template reference list}}}}
 {{{{U.S. COVID-19 case charts}}}}
 {{{{COVID-19 pandemic|data|state=expanded}}}}
