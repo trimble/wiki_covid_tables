@@ -160,21 +160,24 @@ def generate_county_table(data):
   print(table_template)
 
 def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
-  infobox_template = f"""{{{{Infobox outbreak
-| name = COVID-19 pandemic in Indiana
-| disease = [[COVID-19]]
-| virus_strain = [[SARS-CoV-2]]
-| location = [[Indiana]], US
-| first_case = [[Indianapolis]]
-| arrival_date = March 6, 2020
-| confirmed_cases = {confirmed_cases:,}
+  infobox_template = f"""{{{{short description|Ongoing COVID-19 viral pandemic in Indiana, United States}}}}
+  {{{{Infobox outbreak
+| name               = COVID-19 pandemic in Indiana
+| disease            = [[COVID-19]]
+| virus_strain       = [[SARS-CoV-2]]
+| location           = [[Indiana]], US
+| first_case         = [[Indianapolis]]
+| arrival_date       = March 6, 2020
+| confirmed_cases    = {confirmed_cases:,}
 | hospitalized_cases = {all_beds:,} (current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
-| critical_cases = {icu_beds:,}<ref name=beds-vents/>
-| ventilator_cases = {vents:,}<ref name=beds-vents/>
-| deaths = {deaths:,}
-| map1 = COVID-19 Prevalence in Indiana by county.svg
-| legend1 = {{{{COVID-19 pandemic in the United States prevalence legend|state=Indiana}}}}
-| website = {{{{URL|https://www.in.gov/coronavirus/}}}}<br>{{{{URL|https://backontrack.in.gov/}}}}
+| critical_cases     = {icu_beds:,}<ref name=beds-vents/>
+| ventilator_cases   = {vents:,}<ref name=beds-vents/>
+| deaths             = {deaths:,}
+| map1               = COVID-19 rolling 14day Prevalence in Indiana by county.svg
+| legend1            = {{{{COVID-19 pandemic in the United States new cases prevalence legend|state=Indiana}}}}
+| map2               = COVID-19 Prevalence in Indiana by county.svg
+| legend2            = {{{{COVID-19 pandemic in the United States prevalence legend|state=Indiana}}}}
+| website            = {{{{URL|https://www.in.gov/coronavirus/}}}}<br>{{{{URL|https://backontrack.in.gov/}}}}
 }}}}
 {{{{COVID-19 pandemic data/United States/Indiana medical cases chart}}}}
 The [[COVID-19 pandemic]] was confirmed to have reached the U.S. state of [[Indiana]] on March 6, 2020. As of {datetime.datetime.today().strftime('%B %d, %Y')}, the Indiana State Department of Health (ISDH) had confirmed {confirmed_cases:,} cases in the state and {deaths:,} deaths.<ref name=":0">{{{{Cite web|url=https://www.in.gov/coronavirus/|title=ISDH – Novel Coronavirus: Novel Coronavirus (COVID-19)|website=www.in.gov|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>"""
