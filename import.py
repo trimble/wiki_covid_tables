@@ -154,14 +154,13 @@ def generate_county_table(data):
 
 [[Category:COVID-19 pandemic data/United States medical cases by administrative subdivisions|Indiana]]
 [[Category:Indiana templates]]
-</noinclude>
-"""
+</noinclude>"""
 
   print(table_template)
 
 def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
   infobox_template = f"""{{{{short description|Ongoing COVID-19 viral pandemic in Indiana, United States}}}}
-  {{{{Infobox outbreak
+{{{{Infobox outbreak
 | name               = COVID-19 pandemic in Indiana
 | disease            = [[COVID-19]]
 | virus_strain       = [[SARS-CoV-2]]
