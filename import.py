@@ -4,7 +4,7 @@ import pandas as pd
 
 def get_county_data():
   url = f"https://hub.mph.in.gov/dataset/89cfa2e3-3319-4d31-a60d-710f76856588/resource/8b8e6cd7-ede2-4c41-a9bd-4266df783145/download/covid_report_county.xlsx"
-  isdh_data = pd.read_excel(url)[['COUNTY_NAME','COVID_COUNT','COVID_DEATHS','COVID_TEST']]
+  isdh_data = pd.read_excel(url)[['COUNTY_NAME','COVID_COUNT','COVID_DEATHS']]
 
   populations=pd.DataFrame([
     ("Adams", 35777),
@@ -239,7 +239,7 @@ if __name__ == "__main__":
     generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths)
   else:
     trend = get_trend_data()
-    trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
+    trend = trend.rename(columns={'COVID_COUNT': 'cases', 'COVID_DEATHS': 'deaths'})
     trend = trend[['cases', 'deaths']]
     trend = trend.loc['2020-03-06':]
     trend = trend.assign(cases_change=trend.cases.pct_change())
