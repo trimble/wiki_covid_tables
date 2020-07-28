@@ -106,11 +106,11 @@ def get_county_data():
   return(isdh_data)
 
 def get_beds_and_vents_data():
-  url = f"https://hub.mph.in.gov/dataset/5a905d51-eb50-4a83-8f79-005239bd108b/resource/882a7426-886f-48cc-bbe0-a8d14e3012e4/download/covid_report_bedvent.xlsx"
-  return(pd.read_excel(url, index_col='STATUS_TYPE'))
+  url = f"https://hub.mph.in.gov/dataset/4d31808a-85da-4a48-9a76-a273e0beadb3/resource/0c00f7b6-05b0-4ebe-8722-ccf33e1a314f/download/covid_report_bedvent_date.xlsx"
+  return(pd.read_excel(url, index_col='DATE'))
 
 def get_trend_data():
-  url = f"https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/covid-19_statewidetestcasedeathtrends_428.xlsx"
+  url = f"https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/covid_report_date.xlsx"
   return pd.read_excel(url, index_col='DATE')
 
 def generate_county_table(data):
@@ -169,8 +169,8 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | first_case         = [[Indianapolis]]
 | arrival_date       = March 6, 2020
 | confirmed_cases    = {confirmed_cases:,}
-| hospitalized_cases = {all_beds:,} (current)<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/covid-19-beds-and-vents|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
-| critical_cases     = {icu_beds:,}<ref name=beds-vents/>
+| hospitalized_cases =  (current)<ref>{{Cite web |title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19) |author= |work=coronavirus.in.gov |date= |access-date=2020-07-28|url= https://www.coronavirus.in.gov/}}</ref>
+|| critical_cases     = {icu_beds:,}<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/4d31808a-85da-4a48-9a76-a273e0beadb3/resource/0c00f7b6-05b0-4ebe-8722-ccf33e1a314f/download/covid_report_bedvent_date.xlsx|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 | ventilator_cases   = {vents:,}<ref name=beds-vents/>
 | deaths             = {deaths:,}
 | map1               = COVID-19 rolling 14day Prevalence in Indiana by county.svg
@@ -180,7 +180,7 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | website            = {{{{URL|https://www.in.gov/coronavirus/}}}}<br>{{{{URL|https://backontrack.in.gov/}}}}
 }}}}
 {{{{COVID-19 pandemic data/United States/Indiana medical cases chart}}}}
-The [[COVID-19 pandemic]] was confirmed to have reached the U.S. state of [[Indiana]] on March 6, 2020. As of {datetime.datetime.today().strftime('%B %d, %Y')}, the Indiana State Department of Health (ISDH) had confirmed {confirmed_cases:,} cases in the state and {deaths:,} deaths.<ref>{{{{Cite web|url=https://www.in.gov/coronavirus/|title=ISDH – Novel Coronavirus: Novel Coronavirus (COVID-19)|website=www.in.gov|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>"""
+The [[COVID-19 pandemic]] was confirmed to have reached the U.S. state of [[Indiana]] on March 6, 2020. As of {datetime.datetime.today().strftime('%B %d, %Y')}, the Indiana State Department of Health (ISDH) had confirmed {confirmed_cases:,} cases in the state and {deaths:,} deaths. As of July 3, 2020, all 92 counties have reported at least 10 cases with [[Pike County, Indiana|Pike County]] being the last to surpass this threshold.<ref>{{{{Cite web|url=https://www.in.gov/coronavirus/|title=ISDH – Novel Coronavirus: Novel Coronavirus (COVID-19)|website=www.in.gov|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>"""
 
   print(infobox_template)
 
@@ -228,9 +228,9 @@ if __name__ == "__main__":
     generate_county_table(trend)
   elif args.info_box:
     beds_and_vents = get_beds_and_vents_data()
-    all_beds = beds_and_vents.loc['beds_all_occupied_beds_covid_19', 'TOTAL']
-    icu_beds = beds_and_vents.loc['beds_icu_occupied_beds_covid_19', 'TOTAL']
-    vents = beds_and_vents.loc['vents_all_in_use_covid_19', 'TOTAL']
+    all_beds = '(presently not reported)'
+    icu_beds = beds_and_vents.loc[beds_and_vents.index[-1], 'BEDS_ICU_OCCUPIED_COVID_19']
+    vents = beds_and_vents.loc[beds_and_vents.index[-1], 'VENTS_ALL_USE_COVID_19']
 
     trend = get_trend_data()
     deaths = trend.loc[trend.index[-1], 'COVID_DEATHS_CUMSUM']
@@ -239,7 +239,7 @@ if __name__ == "__main__":
     generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths)
   else:
     trend = get_trend_data()
-    trend = trend.rename(columns={'COVID_COUNT': 'cases', 'COVID_DEATHS': 'deaths'})
+    trend = trend.rename(columns={'COVID_COUNT_CUMSUM': 'cases', 'COVID_DEATHS_CUMSUM': 'deaths'})
     trend = trend[['cases', 'deaths']]
     trend = trend.loc['2020-03-06':]
     trend = trend.assign(cases_change=trend.cases.pct_change())
