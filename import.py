@@ -118,7 +118,7 @@ def generate_county_table(data):
 
   list = []
   for index, row in data.iterrows():
-    county_name = index.title().replace("De Kalb", "DeKalb").replace("La Porte", "LaPorte").replace("Lagrange", "LaGrange").replace("St Joseph", "St. Joseph")
+    county_name = index.replace("De Kalb", "DeKalb").replace("La Porte", "LaPorte").replace("Lagrange", "LaGrange").replace("St Joseph", "St. Joseph")
     list.append("|-")
     list.append(f"! style=\"padding:0px 2px;\" |[[{county_name} County, Indiana|{county_name}]]")
     list.append(f"| style=\"padding:0px 2px;\" |{row['COVID_COUNT']:,}")
@@ -169,8 +169,8 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | first_case         = [[Indianapolis]]
 | arrival_date       = March 6, 2020
 | confirmed_cases    = {confirmed_cases:,}
-| hospitalized_cases =  (current)<ref>{{Cite web |title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19) |author= |work=coronavirus.in.gov |date= |access-date=2020-07-28|url= https://www.coronavirus.in.gov/}}</ref>
-|| critical_cases     = {icu_beds:,}<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/4d31808a-85da-4a48-9a76-a273e0beadb3/resource/0c00f7b6-05b0-4ebe-8722-ccf33e1a314f/download/covid_report_bedvent_date.xlsx|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+| hospitalized_cases =  (current)<ref>{{Cite web |title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19) |author= |work=coronavirus.in.gov |date= |access-date={datetime.datetime.today().strftime('%Y-%m-%d')}|url= https://www.coronavirus.in.gov/}}</ref>
+| critical_cases     = {icu_beds:,}<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/4d31808a-85da-4a48-9a76-a273e0beadb3/resource/0c00f7b6-05b0-4ebe-8722-ccf33e1a314f/download/covid_report_bedvent_date.xlsx|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 | ventilator_cases   = {vents:,}<ref name=beds-vents/>
 | deaths             = {deaths:,}
 | map1               = COVID-19 rolling 14day Prevalence in Indiana by county.svg
@@ -180,7 +180,7 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | website            = {{{{URL|https://www.in.gov/coronavirus/}}}}<br>{{{{URL|https://backontrack.in.gov/}}}}
 }}}}
 {{{{COVID-19 pandemic data/United States/Indiana medical cases chart}}}}
-The [[COVID-19 pandemic]] was confirmed to have reached the U.S. state of [[Indiana]] on March 6, 2020. As of {datetime.datetime.today().strftime('%B %d, %Y')}, the Indiana State Department of Health (ISDH) had confirmed {confirmed_cases:,} cases in the state and {deaths:,} deaths. As of July 3, 2020, all 92 counties have reported at least 10 cases with [[Pike County, Indiana|Pike County]] being the last to surpass this threshold.<ref>{{{{Cite web|url=https://www.in.gov/coronavirus/|title=ISDH – Novel Coronavirus: Novel Coronavirus (COVID-19)|website=www.in.gov|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>"""
+The [[COVID-19 pandemic]] was confirmed to have reached the U.S. state of [[Indiana]] on March 6, 2020. As of {datetime.datetime.today().strftime('%B %d, %Y')}, the Indiana State Department of Health (ISDH) had confirmed {confirmed_cases:,} cases in the state and {deaths:,} deaths. As of July 3, 2020, all 92 counties had reported at least 10 cases with [[Pike County, Indiana|Pike County]] being the last to surpass this threshold.<ref>{{{{Cite web|url=https://www.in.gov/coronavirus/|title=ISDH – Novel Coronavirus: Novel Coronavirus (COVID-19)|website=www.in.gov|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>"""
 
   print(infobox_template)
 
