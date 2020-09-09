@@ -169,7 +169,7 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 | first_case         = [[Indianapolis]]
 | arrival_date       = March 6, 2020
 | confirmed_cases    = {confirmed_cases:,}
-| hospitalized_cases =  (current)<ref>{{Cite web |title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19) |author= |work=coronavirus.in.gov |date= |access-date={datetime.datetime.today().strftime('%Y-%m-%d')}|url= https://www.coronavirus.in.gov/}}</ref>
+| hospitalized_cases =  (current)<ref>{{{{Cite web |title=ISDH - Novel Coronavirus: Novel Coronavirus (COVID-19) |author= |work=coronavirus.in.gov |date= |access-date={datetime.datetime.today().strftime('%Y-%m-%d')}|url= https://www.coronavirus.in.gov/}}}}</ref>
 | critical_cases     = {icu_beds:,}<ref name=beds-vents>{{{{cite web|url=https://hub.mph.in.gov/dataset/4d31808a-85da-4a48-9a76-a273e0beadb3/resource/0c00f7b6-05b0-4ebe-8722-ccf33e1a314f/download/covid_report_bedvent_date.xlsx|title=COVID-19 Beds and Vents|publisher=Indiana State Department of Health|access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 | ventilator_cases   = {vents:,}<ref name=beds-vents/>
 | deaths             = {deaths:,}
