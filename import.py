@@ -164,7 +164,7 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
 {{{{Infobox outbreak
 | name               = COVID-19 pandemic in Indiana
 | disease            = [[Coronavirus disease 2019|COVID-19]]
-| virus_strain       = [[SARS-CoV-2]]
+| virus_strain       = [[Severe acute respiratory syndrome coronavirus 2|SARS-CoV-2]]
 | location           = [[Indiana]], U.S.
 | first_case         = [[Indianapolis]]
 | arrival_date       = March 6, 2020
