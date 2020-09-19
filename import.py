@@ -163,9 +163,9 @@ def generate_infobox(confirmed_cases, all_beds, icu_beds, vents, deaths):
   infobox_template = f"""{{{{short description|Ongoing COVID-19 viral pandemic in Indiana, United States}}}}
 {{{{Infobox outbreak
 | name               = COVID-19 pandemic in Indiana
-| disease            = [[COVID-19]]
+| disease            = [[Coronavirus disease 2019|COVID-19]]
 | virus_strain       = [[SARS-CoV-2]]
-| location           = [[Indiana]], US
+| location           = [[Indiana]], U.S.
 | first_case         = [[Indianapolis]]
 | arrival_date       = March 6, 2020
 | confirmed_cases    = {confirmed_cases:,}
