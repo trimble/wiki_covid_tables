@@ -135,7 +135,7 @@ def generate_county_table(data):
 ! style="text-align:right; padding-right:3px;" scope="col" |County{{{{efn|County of residence for individual with a positive test}}}}
 ! style="text-align:right; padding-right:3px;" scope="col" |Cases
 ! style="text-align:right; padding-right:3px;" scope="col" |Deaths
-! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |Population<ref>{{{{cite web |title=County Population Totals: 2010-2019|url=https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html|accessdate=2020-05-02}}}}</ref>
+! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |Population<ref>{{{{cite web |title=County Population Totals: 2010-2019|url=https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html|access-date=2020-05-02}}}}</ref>
 ! style="text-align:right; padding-right:3px;" scope="col" data-sort-type="number" |{{{{abbr|Cases / 100k|Cases per 100,000 in population}}}}
 |-
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''92 / 92'''
@@ -145,7 +145,7 @@ def generate_county_table(data):
 ! style="text-align:right; padding-right:17px; padding-left:3px;" scope="row" |'''{(totals.COVID_COUNT/(totals.population/float(100000))):,.01f}'''
 {separator.join(list)}
 |- style="text-align:center;" class="sortbottom"
-| colspan="7" | {{{{resize|Updated {datetime.datetime.today().strftime('%Y-%m-%d')}}}}}<br/>{{{{resize|Data is publicly reported by Indiana State Department of Health}}}}<ref>{{{{cite web |title=Indiana COVID-19 Data Report |url=https://www.coronavirus.in.gov/2393.htm |website=Indiana State Department of Health |accessdate={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref><ref>{{{{cite web |title=COVID-19 County Statistics |url=https://hub.mph.in.gov/dataset/covid-19-county-statistics |website=Indiana State Department of Health |accessdate={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
+| colspan="7" | {{{{resize|Updated {datetime.datetime.today().strftime('%Y-%m-%d')}}}}}<br/>{{{{resize|Data is publicly reported by Indiana State Department of Health}}}}<ref>{{{{cite web |title=Indiana COVID-19 Data Report |url=https://www.coronavirus.in.gov/2393.htm |website=Indiana State Department of Health |access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref><ref>{{{{cite web |title=COVID-19 County Statistics |url=https://hub.mph.in.gov/dataset/covid-19-county-statistics |website=Indiana State Department of Health |access-date={datetime.datetime.today().strftime('%Y-%m-%d')}}}}}</ref>
 |- style="text-align:center;" class="sortbottom"
 | colspan="7" style="width:1px;"| {{{{notelist}}}}
 |}}
@@ -200,7 +200,7 @@ def generate_template_data(trend):
 |recoveries = no <!-- ISDH is not reporting recoveries -->
 |numwidth   = dddd
 |rowheight  = 1.2
-|duration   = 28
+|duration   = 21
 |altlbl1    = Total Confirmed Cases
 |right2     = # of deaths
 |collapsible=y
